@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Test osobowości – psychologia Junga</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --ink: #1a1814;
-    --ink2: #5a5650;
-    --ink3: #9a9590;
+    --ink: #0f0d0a;
+    --ink2: #3d3a35;
+    --ink3: #7a7570;
     --paper: #f7f4ef;
     --paper2: #ede9e2;
-    --accent: #8b6f47;
-    --accent2: #c4a882;
-    --line: rgba(26,24,20,0.12);
+    --accent: #7a5f38;
+    --accent2: #b89468;
+    --line: rgba(15,13,10,0.15);
   }
 
   html, body {
@@ -24,7 +24,7 @@
     background: var(--paper);
     color: var(--ink);
     font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     -webkit-font-smoothing: antialiased;
   }
 
@@ -39,28 +39,28 @@
   .site-header {
     width: 100%;
     max-width: 560px;
-    padding: 3rem 0 2rem;
+    padding: 2rem 0 1.5rem;
     border-bottom: 1px solid var(--line);
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
   .site-header .eyebrow {
     font-family: 'DM Sans', sans-serif;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
 
   .site-header h1 {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(28px, 6vw, 40px);
-    font-weight: 300;
+    font-size: clamp(26px, 6vw, 38px);
+    font-weight: 500;
     line-height: 1.2;
     color: var(--ink);
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.6rem;
   }
 
   .site-header h1 em {
@@ -69,9 +69,10 @@
   }
 
   .site-header p {
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 400;
     color: var(--ink2);
-    line-height: 1.7;
+    line-height: 1.65;
   }
 
   /* ── Progress ── */
@@ -121,21 +122,21 @@
   }
 
   .dim-tag {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.15em;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.13em;
     text-transform: uppercase;
-    color: var(--accent2);
-    margin-bottom: 1rem;
+    color: var(--accent);
+    margin-bottom: 0.85rem;
   }
 
   .q-text {
     font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(18px, 4vw, 22px);
-    font-weight: 400;
-    line-height: 1.5;
+    font-size: clamp(19px, 4vw, 23px);
+    font-weight: 500;
+    line-height: 1.45;
     color: var(--ink);
-    margin-bottom: 1.75rem;
+    margin-bottom: 1.5rem;
   }
 
   .options {
@@ -190,13 +191,15 @@
   }
 
   .opt-text {
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.55;
     color: var(--ink2);
   }
 
   .opt.selected .opt-text {
     color: var(--ink);
+    font-weight: 500;
   }
 
   /* ── Nav ── */
@@ -212,12 +215,12 @@
     background: none;
     border: none;
     font-family: 'DM Sans', sans-serif;
-    font-size: 13px;
-    font-weight: 400;
+    font-size: 14px;
+    font-weight: 500;
     color: var(--ink2);
     cursor: pointer;
     padding: 6px 0;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.02em;
     transition: color 0.15s;
   }
 
@@ -226,13 +229,14 @@
 
   .nav-btn.primary {
     color: var(--accent);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .nav-btn.primary:hover { color: var(--ink); }
 
   .answered-count {
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 400;
     color: var(--ink3);
   }
 
@@ -248,24 +252,24 @@
     background: #fff;
     border: 1px solid var(--line);
     border-radius: 2px;
-    padding: 2.5rem 2rem 2rem;
+    padding: 2rem 2rem 1.75rem;
     margin-bottom: 1rem;
     text-align: center;
   }
 
   .result-eyebrow {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.2em;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--accent2);
+    color: var(--accent);
     margin-bottom: 1rem;
   }
 
   .type-letters {
     font-family: 'Cormorant Garamond', serif;
     font-size: clamp(52px, 14vw, 80px);
-    font-weight: 300;
+    font-weight: 600;
     letter-spacing: 0.12em;
     color: var(--ink);
     line-height: 1;
@@ -275,15 +279,16 @@
   .type-name {
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
-    font-weight: 400;
+    font-weight: 500;
     font-style: italic;
     color: var(--accent);
     margin-bottom: 1.25rem;
   }
 
   .type-desc {
-    font-size: 14px;
-    line-height: 1.75;
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.7;
     color: var(--ink2);
     max-width: 400px;
     margin: 0 auto;
@@ -304,16 +309,16 @@
   }
 
   .dim-card-title {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
     color: var(--ink3);
     margin-bottom: 10px;
   }
 
   .bar-track {
-    height: 3px;
+    height: 4px;
     background: var(--paper2);
     border-radius: 2px;
     margin-bottom: 8px;
@@ -330,13 +335,14 @@
   .bar-labels {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
+    font-size: 13px;
+    font-weight: 400;
     color: var(--ink3);
   }
 
   .bar-labels .win {
     color: var(--ink);
-    font-weight: 500;
+    font-weight: 600;
   }
 
   .result-footer {
@@ -352,16 +358,16 @@
   }
 
   .result-footer p {
-    font-size: 13px;
+    font-size: 14px;
     color: var(--ink2);
     line-height: 1.5;
   }
 
   .result-footer strong {
     display: block;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.05em;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
     color: var(--ink);
     margin-bottom: 2px;
   }

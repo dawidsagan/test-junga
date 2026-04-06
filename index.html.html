@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test osobowości – psychologia Junga</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #1a1814;
+    --ink2: #5a5650;
+    --ink3: #9a9590;
+    --paper: #f7f4ef;
+    --paper2: #ede9e2;
+    --accent: #8b6f47;
+    --accent2: #c4a882;
+    --line: rgba(26,24,20,0.12);
+  }
+
+  html, body {
+    min-height: 100%;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 1rem 4rem;
+  }
+
+  /* ── Header ── */
+  .site-header {
+    width: 100%;
+    max-width: 560px;
+    padding: 3rem 0 2rem;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 2.5rem;
+  }
+
+  .site-header .eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+
+  .site-header h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 6vw, 40px);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+  }
+
+  .site-header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .site-header p {
+    font-size: 14px;
+    color: var(--ink2);
+    line-height: 1.7;
+  }
+
+  /* ── Progress ── */
+  .progress-wrap {
+    width: 100%;
+    max-width: 560px;
+    margin-bottom: 2rem;
+  }
+
+  .progress-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ink3);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
+
+  .progress-track {
+    height: 2px;
+    background: var(--paper2);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 1px;
+    transition: width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+
+  /* ── Question card ── */
+  .card {
+    width: 100%;
+    max-width: 560px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2rem 2rem 1.5rem;
+    animation: fadeSlide 0.3s ease both;
+  }
+
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .dim-tag {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+  }
+
+  .q-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 4vw, 22px);
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--ink);
+    margin-bottom: 1.75rem;
+  }
+
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 1.75rem;
+  }
+
+  .opt {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 16px;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    background: var(--paper);
+  }
+
+  .opt:hover {
+    border-color: var(--accent2);
+    background: #fdfaf6;
+  }
+
+  .opt.selected {
+    border-color: var(--accent);
+    background: #fdf8f2;
+  }
+
+  .opt-letter {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink3);
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    margin-top: 1px;
+  }
+
+  .opt.selected .opt-letter {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .opt-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--ink2);
+  }
+
+  .opt.selected .opt-text {
+    color: var(--ink);
+  }
+
+  /* ── Nav ── */
+  .nav-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .nav-btn {
+    background: none;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink2);
+    cursor: pointer;
+    padding: 6px 0;
+    letter-spacing: 0.03em;
+    transition: color 0.15s;
+  }
+
+  .nav-btn:hover { color: var(--ink); }
+  .nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+  .nav-btn.primary {
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .nav-btn.primary:hover { color: var(--ink); }
+
+  .answered-count {
+    font-size: 12px;
+    color: var(--ink3);
+  }
+
+  /* ── Result ── */
+  .result-wrap {
+    display: none;
+    width: 100%;
+    max-width: 560px;
+    animation: fadeSlide 0.4s ease both;
+  }
+
+  .result-header {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 2.5rem 2rem 2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .result-eyebrow {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 1rem;
+  }
+
+  .type-letters {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 14vw, 80px);
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .type-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 1.25rem;
+  }
+
+  .type-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink2);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .dims-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .dim-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 14px 16px;
+  }
+
+  .dim-card-title {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 10px;
+  }
+
+  .bar-track {
+    height: 3px;
+    background: var(--paper2);
+    border-radius: 2px;
+    margin-bottom: 8px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    background: var(--accent);
+    border-radius: 2px;
+    transition: width 0.8s cubic-bezier(.4,0,.2,1);
+  }
+
+  .bar-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--ink3);
+  }
+
+  .bar-labels .win {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  .result-footer {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 2px;
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .result-footer p {
+    font-size: 13px;
+    color: var(--ink2);
+    line-height: 1.5;
+  }
+
+  .result-footer strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+
+  .restart-btn {
+    background: none;
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    padding: 10px 20px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+  }
+
+  .restart-btn:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+
+  @media (max-width: 400px) {
+    .card { padding: 1.5rem 1.25rem 1.25rem; }
+    .dims-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="eyebrow">Psychologia Junga · Test orientacyjny</div>
+  <h1>Poznaj swój<br>typ <em>osobowości</em></h1>
+  <p>16 pytań, około 10 minut. Odpowiedz spontanicznie – pierwsza intuicja jest zwykle najtrafniejsza.</p>
+</header>
+
+<div class="progress-wrap" id="progress-wrap">
+  <div class="progress-meta">
+    <span id="progress-label">Pytanie 1 z 16</span>
+    <span id="progress-pct">6%</span>
+  </div>
+  <div class="progress-track">
+    <div class="progress-fill" id="progress-fill" style="width:6%"></div>
+  </div>
+</div>
+
+<div id="question-card"></div>
+<div class="result-wrap" id="result-wrap"></div>
+
+<script>
+const questions = [
+  { dim:0, text:"Po długim dniu pełnym spotkań i rozmów z ludźmi czujesz się:", a:"Naładowany energią – kontakt z ludźmi mnie ożywia", b:"Zmęczony i potrzebuję czasu sam ze sobą" },
+  { dim:0, text:"Na imprezie z nowo poznanymi ludźmi zazwyczaj:", a:"Inicjuję rozmowy i szybko czuję się swobodnie", b:"Wolę obserwować i włączam się, gdy ktoś mnie zagadnie" },
+  { dim:0, text:"Kiedy masz ważną decyzję do podjęcia, wolisz:", a:"Omówić ją na głos z kimś bliskim – rozmowa mi pomaga", b:"Przemyśleć ją w ciszy, sam ze sobą" },
+  { dim:0, text:"W nowym środowisku (praca, kurs, wyjazd) zazwyczaj:", a:"Szybko nawiązuję znajomości i czuję się naturalnie", b:"Potrzebuję czasu, żeby się oswoić – obserwuję zanim zadziałam" },
+  { dim:1, text:"Planując urlop, ważniejsze jest dla Ciebie:", a:"Konkretny plan: hotele, godziny, atrakcje zarezerwowane z wyprzedzeniem", b:"Ogólny kierunek i elastyczność – zobaczę co się trafi na miejscu" },
+  { dim:1, text:"Kiedy ktoś opisuje Ci problem, bardziej skupiasz się na:", a:"Konkretnych faktach i szczegółach – co dokładnie się stało", b:"Tym, co ta sytuacja może oznaczać – widzę szerszy kontekst" },
+  { dim:1, text:"W pracy bardziej cenisz:", a:"Sprawdzone procedury i jasne kryteria sukcesu", b:"Swobodę eksperymentowania i szukania nowych rozwiązań" },
+  { dim:1, text:"Czytając instrukcję do nowego urządzenia:", a:"Czytam punkt po punkcie od początku", b:"Przeglądam ogólnie i działam metodą prób" },
+  { dim:2, text:"Gdy bliski przyjaciel popełnił błąd i prosi Cię o opinię, przede wszystkim:", a:"Mówię mu wprost co zrobił nie tak, nawet jeśli to zaboli", b:"Zaczynam od zrozumienia jego perspektywy i dbam o to, żeby nie zranić" },
+  { dim:2, text:"Przy wyborze między dwoma ofertami pracy, kluczowe jest dla Ciebie:", a:"Zarobki, możliwości awansu, obiektywne warunki", b:"Atmosfera, wartości firmy, relacje z zespołem" },
+  { dim:2, text:"Gdy jesteś w konflikcie z kimś bliskim, zazwyczaj:", a:"Staram się rozwiązać problem logicznie, nawet jeśli rozmowa jest trudna", b:"Priorytetem jest dla mnie harmonia i zachowanie relacji" },
+  { dim:2, text:"Kiedy ktoś w zespole pracuje wolniej i obniża wyniki, reagujesz:", a:"Mówię mu bezpośrednio o problemie i oczekuję zmiany", b:"Zastanawiam się najpierw, czy dzieje się coś trudnego w jego życiu" },
+  { dim:3, text:"Twoje biurko / przestrzeń do pracy wygląda zazwyczaj tak:", a:"Porządek i swoje miejsce na wszystko – chaos mnie rozprasza", b:"Kreatywny nieład – wiem gdzie co jest, nawet jeśli inni tego nie widzą" },
+  { dim:3, text:"Jak reagujesz, gdy niespodziewanie zmienia się plan dnia:", a:"Czuję się wybity z rytmu i potrzebuję chwili, żeby się przestawić", b:"Adaptuję się szybko – spontaniczność mi nie przeszkadza" },
+  { dim:3, text:"Kończąc projekt, zazwyczaj:", a:"Jestem spokojny dopiero gdy wszystko jest domknięte i oddane", b:"Lubię zostawić sobie furtkę do ostatniej chwili – może coś jeszcze dopracuję" },
+  { dim:3, text:"Twój styl planowania tygodnia to:", a:"Mam jasno zaplanowane bloki czasu i listę zadań", b:"Ogólne priorytety w głowie, szczegóły układam na bieżąco" }
+];
+
+const dimNames = ["Introwersja / Ekstrawersja","Zmysły / Intuicja","Myślenie / Uczucie","Ocenianie / Obserwacja"];
+const letters = [["I","E"],["S","N"],["T","F"],["J","P"]];
+
+const typeData = {
+  ISTJ:{name:"Logistyk",desc:"Praktyczny i niezawodny. Cenisz porządek, lojalność i tradycję. Dotrzymujesz obietnic i oczekujesz tego samego od innych."},
+  ISFJ:{name:"Obrońca",desc:"Ciepły i oddany. Dbasz o innych z wyjątkową troską i dyskrecją. Siła tkwi w Twoim spokoju i pamięci do szczegółów."},
+  INFJ:{name:"Adwokat",desc:"Wizjonerski i idealistyczny. Masz głębokie przekonania i rzadką zdolność rozumienia innych. Działasz w zgodzie z wartościami."},
+  INTJ:{name:"Architekt",desc:"Strategiczny i niezależny. Widzisz wzorce tam, gdzie inni widzą chaos. Cenisz kompetencję i długoterminowe myślenie."},
+  ISTP:{name:"Wirtuoz",desc:"Spokojny obserwator z analitycznym umysłem. Świetnie radzisz sobie z narzędziami, systemami i rozwiązywaniem problemów w praktyce."},
+  ISFP:{name:"Poszukiwacz",desc:"Wrażliwy i autentyczny. Żyjesz chwilą i cenisz piękno w codzienności. Twoja lojalność wobec bliskich jest bezgraniczna."},
+  INFP:{name:"Mediator",desc:"Empatyczny i twórczy. Kierujesz się wewnętrznym kompasem wartości. Szukasz głębszego sensu w każdym doświadczeniu."},
+  INTP:{name:"Logik",desc:"Dociekliwy i niezależny myśliciel. Pasjonuje Cię analiza idei i szukanie spójności w teoriach. Lubisz debatować dla samej przyjemności myślenia."},
+  ESTP:{name:"Przedsiębiorca",desc:"Energiczny i pragmatyczny. Działasz szybko, reagujesz na bieżąco i świetnie radzisz sobie w kryzysie. Lubisz ryzyko i konkretne efekty."},
+  ESFP:{name:"Entertainer",desc:"Spontaniczny i pełen życia. Wnosisz energię do każdego pomieszczenia. Lubisz ludzi, nowe doświadczenia i dzielenie się radością."},
+  ENFP:{name:"Kampania",desc:"Entuzjastyczny i kreatywny. Widzisz możliwości wszędzie. Inspirujesz innych swoją energią i autentyczną ciekawością świata."},
+  ENTP:{name:"Dyskutant",desc:"Pomysłowy i przenikliwy. Lubisz kwestionować status quo i rozważać każdy argument. Myślisz nieszablonowo i motywujesz do tego innych."},
+  ESTJ:{name:"Dyrektor",desc:"Zorganizowany i decyzyjny. Cenisz strukturę, jasne zasady i skuteczność. Naturalnie bierzesz odpowiedzialność i doprowadzasz sprawy do końca."},
+  ESFJ:{name:"Konsul",desc:"Troskliwy i towarzyski. Budujesz silne relacje i dbasz o harmonię w grupie. Twoja empatia i lojalność tworzą wokół Ciebie poczucie bezpieczeństwa."},
+  ENFJ:{name:"Protagonista",desc:"Charyzmatyczny i empatyczny lider. Inspirujesz innych do działania i wzrostu. Masz talent do wydobywania z ludzi tego, co najlepsze."},
+  ENTJ:{name:"Dowódca",desc:"Pewny siebie i zdeterminowany. Naturalnie przejmujesz inicjatywę i widzisz jak osiągnąć cel. Cenisz efektywność i ciągłe doskonalenie."}
+};
+
+let answers = new Array(16).fill(null);
+let current = 0;
+
+function render() {
+  const card = document.getElementById('question-card');
+  const q = questions[current];
+  const pct = Math.round((current+1)/16*100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-label').textContent = `Pytanie ${current+1} z 16`;
+  document.getElementById('progress-pct').textContent = pct+'%';
+
+  card.innerHTML = `<div class="card">
+    <div class="dim-tag">${dimNames[q.dim]}</div>
+    <div class="q-text">${q.text}</div>
+    <div class="options">
+      <div class="opt${answers[current]==='a'?' selected':''}" onclick="pick('a')">
+        <div class="opt-letter">A</div>
+        <div class="opt-text">${q.a}</div>
+      </div>
+      <div class="opt${answers[current]==='b'?' selected':''}" onclick="pick('b')">
+        <div class="opt-letter">B</div>
+        <div class="opt-text">${q.b}</div>
+      </div>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn" onclick="prev()" ${current===0?'disabled':''}>← Wstecz</button>
+      <span class="answered-count">${answers.filter(a=>a!==null).length} / 16</span>
+      <button class="nav-btn primary" onclick="next()">${current===15?'Zobacz wynik →':'Dalej →'}</button>
+    </div>
+  </div>`;
+}
+
+function pick(val) {
+  answers[current] = val;
+  render();
+  if(current < 15) setTimeout(()=>{ current++; render(); }, 280);
+}
+
+function prev() { if(current>0){ current--; render(); } }
+
+function next() {
+  if(current<15){ current++; render(); }
+  else { showResult(); }
+}
+
+function showResult() {
+  const unanswered = answers.filter(a=>a===null).length;
+  if(unanswered > 0) { alert(`Zostały ${unanswered} pytania bez odpowiedzi. Wróć i uzupełnij.`); return; }
+
+  document.getElementById('question-card').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+
+  const scores = [[0,0],[0,0],[0,0],[0,0]];
+  questions.forEach((q,i)=>{ answers[i]==='a' ? scores[q.dim][0]++ : scores[q.dim][1]++; });
+
+  let type = '';
+  scores.forEach((s,i)=>{ type += s[0]>=s[1]?letters[i][0]:letters[i][1]; });
+
+  const td = typeData[type] || {name:'Wyjątkowy typ',desc:'Twój profil jest bardzo zrównoważony – warto omówić go na warsztacie.'};
+
+  let dimsHtml = '';
+  scores.forEach((s,i)=>{
+    const total = s[0]+s[1];
+    const pA = Math.round(s[0]/total*100);
+    const pB = 100-pA;
+    const winA = s[0]>=s[1];
+    dimsHtml += `<div class="dim-card">
+      <div class="dim-card-title">${dimNames[i]}</div>
+      <div class="bar-track"><div class="bar-fill" style="width:${pA}%"></div></div>
+      <div class="bar-labels">
+        <span class="${winA?'win':''}">${letters[i][0]} ${pA}%</span>
+        <span class="${!winA?'win':''}">${letters[i][1]} ${pB}%</span>
+      </div>
+    </div>`;
+  });
+
+  const res = document.getElementById('result-wrap');
+  res.style.display = 'block';
+  res.innerHTML = `
+    <div class="result-header">
+      <div class="result-eyebrow">Twój orientacyjny typ</div>
+      <div class="type-letters">${type}</div>
+      <div class="type-name">${td.name}</div>
+      <p class="type-desc">${td.desc}</p>
+    </div>
+    <div class="dims-grid">${dimsHtml}</div>
+    <div class="result-footer">
+      <div>
+        <strong>To wynik orientacyjny</strong>
+        <p>Omówimy go szczegółowo podczas warsztatu.</p>
+      </div>
+      <button class="restart-btn" onclick="restart()">Zrób ponownie</button>
+    </div>
+  `;
+}
+
+function restart() {
+  answers = new Array(16).fill(null);
+  current = 0;
+  document.getElementById('question-card').style.display = 'block';
+  document.getElementById('progress-wrap').style.display = 'block';
+  document.getElementById('result-wrap').style.display = 'none';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
